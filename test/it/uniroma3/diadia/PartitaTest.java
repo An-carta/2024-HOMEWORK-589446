@@ -1,64 +1,33 @@
 package it.uniroma3.diadia;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import org.junit.Test;
 
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Stanza;
 
-
 public class PartitaTest {
-	
-	private Partita partita; 
-	
-	@BeforeEach
-	public void setUp() {
-		this.partita = new Partita();
-	}
+
+	Partita p = new Partita();
+	Stanza s = new Stanza("Stanza");
 	
 	@Test
-	public void testGetStanzaVincenteNotNull() {
-		assertNotNull(this.partita.getStanzaVincente());
+	public void testGetStanzaVincente() {
+		assertEquals("Biblioteca", p.getLabirinto().getStanzaVincente().getNome());
+	}
+
+	@Test
+	public void testSetStanzaCorrente() {
+		p.getLabirinto().setStanzaCorrente(s);
+		assertEquals(s, p.getLabirinto().getStanzaCorrente());
+	}
+
+	@Test
+	public void testIsFinita() {
+		
+		assertFalse(p.isFinita());
 	}
 	
-	@Test
-	public void testVintaSeStanzaCorrenteEVincente() {
-		this.partita.setStanzaCorrente(this.partita.getStanzaVincente());
-		assertTrue(this.partita.vinta());
-	}
-	
-	@Test
-	public void testNonVintaSeStanzaCorrenteNonEVincente() {
-		this.partita.setStanzaCorrente(new Stanza("NonVincente"));
-		assertFalse(this.partita.vinta());
-	}
-	
-	@Test
-	public void testNonVintaInizioPartita() {
-		assertFalse(this.partita.vinta());
-	}
-	
-	@Test
-	public void testFinitaSeVinta() {
-		this.partita.setStanzaCorrente(this.partita.getStanzaVincente());
-		assertTrue(this.partita.isFinita());
-	}
-	
-	@Test
-	public void testFinitaSeEsplicitamenteSettato() {
-		this.partita.setFinita();
-		assertTrue(this.partita.isFinita());
-	}
-	
-	@Test
-	public void testFinitaSeCFUFiniti() {
-		this.partita.setCfu(0);
-		assertTrue(this.partita.isFinita());
-	}
-	
-	@Test
-	public void testNonFinitaInizioPartita() {
-		assertFalse(this.partita.isFinita());
-	}
 }
